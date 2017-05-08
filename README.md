@@ -1,4 +1,4 @@
-# spotme
+# night Spot
 
 > A Vue.js project
 
