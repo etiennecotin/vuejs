@@ -1,59 +1,42 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
+import Axios from 'axios'
 
-import Vuex2 from './store/index.js'
+// import Materials from 'materialize-css'
 
-import App from './App.vue'
 
+import App from './component/app/App.vue'
 import Test from './component/test/test.vue'
+
+import Home from './component/home/home.vue'
+import login from './component/login/login.vue'
+import signUp from './component/login/signUp.vue'
+
+import Base from './component/base.vue'
 
 
 
 
 Vue.use(VueRouter)
 Vue.use(Vuex)
-
+Vue.use(Axios)
+// Vue.use(Materials)
 
 const router = new VueRouter({
 	mode: 'history',
 	base: __dirname,
 	routes: [
-      {name: 'home', path: '/', component: App},
+      {name: 'home', path: '/', component: Home},
+      {name: 'login', path: '/login', component: login},
+      {name: 'signUp', path: '/login/signup', component: signUp},
+
       {name: 'test', path: '/test', component: Test },
-      {name: 'prout', path: '/test/:id', component: Test }
+      {name: 'panier', path: '/panier', component: App }
     ]
 });
 
 
-const app = new Vue({
-  router,
-   // render: h => h(Test)
-}).$mount('#app')
+const app = new Vue(Vue.util.extend({router}, Base)).$mount('#app');
 
-
-
-
-// Vue.use(VueRouter)
-
-// const router = new VueRouter({history: true, root: config.root});
-
-// router.map({
-//     '/': {
-//         name: 'prout',
-//         component: Home
-//     },
-//     '/test/:id': {
-//         name: 'test',
-//         component: Test
-//     }
-// });
-
-// // const app = new Vue({
-// //   el: '#app',
-// //   render: h => h(App)
-// // })
-
-// var app = new Vue({
-//   router,
-// }).$mount('#app')
+window.vue = app;

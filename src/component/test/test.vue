@@ -6,7 +6,9 @@
   <p>{{ count }}.</p>
   <p>
     <button @click="increment">+</button>
-    <button @click="decrement">-</button>
+    <button v-if="count > 0" @click="decrement">-</button>
+
+    <span v-if="notifications" v-for="notification in notifications">{{notification}}</span>
   </p>
 </div>
 </template>
@@ -24,17 +26,24 @@ export default {
             msg: 'Welcome to Your Vue.js App',
         }
     },
-    computed: {
-      count () {
-        return this.$store.getters.checkoutStatus
-      }
-    },
+    computed: mapGetters({
+            count: 'checkoutStatus',
+            notifications: 'notifications'
+    }),
     methods: {
       increment () {
-        this.$store.commit('increment')
+//        this.$store.commit('increment')
+
+          store.dispatch('increment')
       },
       decrement () {
-        this.$store.commit('decrement')
+//        this.$store.commit('decrement')
+
+          store.dispatch('decrement').then(() => {
+//              this.success = true;
+//              setTimeout(() => { this.success = false; }, 1000)
+              Materialize.toast('I am a toast!', 2000) // 4000 is the duration of the toast
+          })
       }
   }
 }

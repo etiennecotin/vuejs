@@ -1,7 +1,7 @@
 <template>
 <div class="panel panel-primary">
   <div class="panel-heading">Panier</div>        
-  <table class="table table-bordered table-striped">
+  <table class="table table-bordered table-striped mdl-data-table">
     <thead>
       <tr>
        <th class="col-sm-4">Article</th>
