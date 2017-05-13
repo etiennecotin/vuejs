@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import test from './modules/test'
+import general from './modules/general'
 // import info from './modules/info'
 // import menu from './modules/menu'
 // import messages from './modules/messages'
@@ -12,6 +13,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     modules: {
         test,
+        general,
         // info,
         // menu,
         // messages,

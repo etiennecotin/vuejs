@@ -8,7 +8,12 @@
     <button @click="increment">+</button>
     <button v-if="count > 0" @click="decrement">-</button>
 
-    <span v-if="notifications" v-for="notification in notifications">{{notification}}</span>
+    <!--<span >-->
+
+
+
+
+    <!--</span>-->
   </p>
 </div>
 </template>
@@ -24,11 +29,13 @@ export default {
   data () {
         return {
             msg: 'Welcome to Your Vue.js App',
+//            notifications: []
+
         }
     },
     computed: mapGetters({
             count: 'checkoutStatus',
-            notifications: 'notifications'
+            notification: 'notification'
     }),
     methods: {
       increment () {
@@ -41,8 +48,11 @@ export default {
 
           store.dispatch('decrement').then(() => {
 //              this.success = true;
+
+              store.dispatch('addNotification', 'Un  problème est survenue').then(() => {})
 //              setTimeout(() => { this.success = false; }, 1000)
-              Materialize.toast('I am a toast!', 2000) // 4000 is the duration of the toast
+//              Materialize.toast('Notification !', 2000) // 4000 is the duration of the toast
+
           })
       }
   }

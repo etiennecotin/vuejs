@@ -4,13 +4,16 @@ import * as types from '../mutation-types'
 
 const state = {
      count: 0,
-     notifications: []
+     // notifications: [],
+     test2:'test',
+     test: []
 };
 
 // getters
 const getters = {
     checkoutStatus: state => state.count,
-    notifications: state => state.notifications
+    // notifications: state => state.notifications,
+    test:  state => [state.test2, state => state.count]
 };
 
 // actions
@@ -27,7 +30,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             // setTimeout(() => {
                 commit(types.DECREMENTE)
-                commit(types.SET_NOTIFICATIONS)
+                // commit(types.SET_NOTIFICATIONS)
                 resolve()
             // }, 1000)
         })
@@ -44,10 +47,10 @@ const mutations = {
     [types.DECREMENTE] (state) {
         state.count--
     },
-    [types.SET_NOTIFICATIONS] (state) {
-        state.notifications.push('Mis à jour');
-        setTimeout(() => { state.notifications.pop() }, 1500)
-    },
+    // [types.SET_NOTIFICATIONS] (state) {
+    //     state.notifications.push('Mis à jour');
+    //     setTimeout(() => { state.notifications.pop() }, 1500)
+    // },
 
 };
 

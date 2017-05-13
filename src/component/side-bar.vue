@@ -1,44 +1,56 @@
 <template>
     <div>
-        <nav>
-            <div class="nav-wrapper">
-                <!--<a href="#" class="brand-logo center">Logo</a>-->
-                <a href="#" data-activates="slide-out" class="brand-logo"><i class="material-icons">menu</i></a>
 
-                <router-link :to="{ name: 'home'}" data-activates="slide-out" class="brand-logo center">Logo</router-link>
+        <!--<div class="phone-viewport">-->
+
+        <md-toolbar>
+            <md-button class="md-icon-button" @click.native="toggleLeftSidenav">
+                <md-icon>menu</md-icon>
+            </md-button>
+
+            <h2 class="md-title">Night Spot</h2>
+        </md-toolbar>
+        <!--<nav class=" teal  lighten-2">-->
+            <!--<div class="nav-wrapper lighten-2" >-->
+                <!--&lt;!&ndash;<a href="#" class="brand-logo center">Logo</a>&ndash;&gt;-->
+                <!--<a href="#" data-activates="slide-out" class="brand-logo"><i class="material-icons">menu</i></a>-->
+
+                <!--<router-link :to="{ name: 'home'}" data-activates="slide-out" class="brand-logo center">Logo</router-link>-->
 
 
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <!--<ul id="nav-mobile" class="right hide-on-med-and-down">-->
+                    <!--<li><router-link :to="{ name: 'home'}" class="test">Go to home</router-link></li>-->
+                    <!--<li><router-link :to="{ name: 'test'}">test</router-link></li>-->
+                    <!--<li><router-link :to="{ name: 'panier'}">Go to panier</router-link></li>-->
+                <!--</ul>-->
+            <!--</div>-->
+        <!--</nav>-->
+
+            <md-sidenav class="md-left" ref="leftSidenav" @open="open('Left')" @close="close('Left')">
+                <md-toolbar class="md-large">
+                    <div class="md-toolbar-container">
+                        <h3 class="md-title">My profil</h3>
+                    </div>
+                </md-toolbar>
+                <div class="nav-bar-link">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi cupiditate esse necessitatibus beatae nobis, deserunt ut est fugit, tempora deleniti, eligendi commodi doloribus. Nemo, assumenda possimus, impedit inventore perferendis iusto!</p>
                     <li><router-link :to="{ name: 'home'}" class="test">Go to home</router-link></li>
                     <li><router-link :to="{ name: 'test'}">test</router-link></li>
                     <li><router-link :to="{ name: 'panier'}">Go to panier</router-link></li>
-                </ul>
-            </div>
-        </nav>
+                </div>
+            </md-sidenav>
 
+
+        <!--</div>-->
+
+        <!--<md-bottom-bar>-->
+            <!--<md-bottom-bar-item md-icon="history"><router-link :to="{ name: 'home'}" class="test">Go to home</router-link></md-bottom-bar-item>-->
+            <!--<md-bottom-bar-item md-icon="favorite" md-active><router-link :to="{ name: 'test'}">test</router-link></md-bottom-bar-item>-->
+            <!--<md-bottom-bar-item md-icon="near_me"><router-link :to="{ name: 'panier'}">Go to panier</router-link></md-bottom-bar-item>-->
+        <!--</md-bottom-bar>-->
 
 
         <!--<router-link to="/home'">Go to home</router-link>-->
-
-
-
-
-        <ul id="slide-out" class="side-nav" style="transform: translateX(-100%);">
-            <li><div class="userView">
-                <div class="background">
-                    <img src="images/office.jpg">
-                </div>
-                <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
-                <a href="#!name"><span class="white-text name">John Doe</span></a>
-                <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
-            </div></li>
-            <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-            <li><a href="#!">Second Link</a></li>
-            <li><div class="divider"></div></li>
-            <li><a class="subheader">Subheader</a></li>
-            <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-        </ul>
-
 
     </div>
 
@@ -53,13 +65,7 @@
         name: 'sideBar',
         store,
         ready: function(){
-//            $('.button-collapse').sideNav({
-//                    menuWidth: 300, // Default is 300
-//                    edge: 'right', // Choose the horizontal origin
-//                    closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-//                    draggable: true // Choose whether you can drag to open on touch screens
-//            });
-
+//
             // Show sideNav
 //            $('.button-collapse').sideNav('show');
             // Initialize collapse button
@@ -75,6 +81,23 @@
                 $("#slide-out").css("transform", "translateX(0%)");
 
             }) ;
+        },
+        methods: {
+            toggleLeftSidenav() {
+                this.$refs.leftSidenav.toggle();
+            },
+            toggleRightSidenav() {
+                this.$refs.rightSidenav.toggle();
+            },
+            closeRightSidenav() {
+                this.$refs.rightSidenav.close();
+            },
+            open(ref) {
+                console.log('Opened: ' + ref);
+            },
+            close(ref) {
+                console.log('Closed: ' + ref);
+            }
         }
 
     }

@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
-import Axios from 'axios'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 
 // import Materials from 'materialize-css'
 
@@ -17,10 +19,30 @@ import Base from './component/base.vue'
 
 
 
-
 Vue.use(VueRouter)
 Vue.use(Vuex)
-Vue.use(Axios)
+Vue.use(VueAxios, axios)
+
+
+
+import VueMaterial from 'vue-material'
+// import 'vue-material/dist/vue-material.css'
+
+import Vuetify from 'vuetify'
+Vue.use(VueMaterial)
+Vue.use(Vuetify)
+
+
+
+
+
+// Vue.use(VueMaterial.MdCore) //Required to boot vue material
+// Vue.use(VueMaterial.MdButton)
+// Vue.use(VueMaterial.MdIcon)
+// Vue.use(VueMaterial.MdSidenav)
+// Vue.use(VueMaterial.MdToolbar)
+
+
 // Vue.use(Materials)
 
 const router = new VueRouter({
