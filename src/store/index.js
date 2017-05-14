@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import test from './modules/test'
 import general from './modules/general'
+import users from './modules/users'
 // import info from './modules/info'
 // import menu from './modules/menu'
 // import messages from './modules/messages'
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     modules: {
         test,
         general,
+        users,
         // info,
         // menu,
         // messages,

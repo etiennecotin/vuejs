@@ -9,49 +9,19 @@
 
 
         <!--</side-bar>-->
-        <md-toolbar>
-            <md-button class="md-icon-button" @click.native="toggleLeftSidenav">
-                <md-icon>menu</md-icon>
-            </md-button>
-
-            <h2 class="md-title">Night Spot</h2>
-        </md-toolbar>
-
-        <!--<md-toolbar>-->
-            <!--<md-button class="md-icon-button" @click.native="toggleLeftSidenav">-->
-
-            <!--</md-button>-->
-        <!--</md-toolbar>-->
-
-        <md-toolbar class="md-dense" v-if="!home">
-            <md-button class="md-icon-button" @click.native="goBack">
-                <md-icon >reply</md-icon>
-            </md-button>
-
-            <!--<h2 class="md-title" style="flex: 1">Dense</h2>-->
-
-            <md-button class="md-icon-button">
-                <md-icon>favorite</md-icon>
-            </md-button>
-        </md-toolbar>
 
 
-        <md-sidenav class="md-left" ref="leftSidenav" @open="open('Left')" @close="close('Left')">
-            <md-toolbar class="md-large">
-                <div class="md-toolbar-container">
-                    <h3 class="md-title">My profil</h3>
-                </div>
-            </md-toolbar>
 
-            <div class="nav-bar-link">
-                <!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi cupiditate esse necessitatibus beatae nobis, deserunt ut est fugit, tempora deleniti, eligendi commodi doloribus. Nemo, assumenda possimus, impedit inventore perferendis iusto!</p>-->
-                <li><router-link :to="{ name: 'home'}" ref="leftSidenav" @click.native="toggleLeftSidenav">Go to home</router-link></li>
-                <li><router-link :to="{ name: 'test'}" ref="leftSidenav" @click.native="toggleLeftSidenav" >test</router-link></li>
-                <li><router-link :to="{ name: 'panier'}" ref="leftSidenav" @click.native="toggleLeftSidenav" >Go to panier</router-link></li>
-            </div>
-        </md-sidenav>
+
+
+
+            <!--if user log-->
+
+            <side-bar></side-bar>
+
 
         <div class="main-content">
+
             <transition name="slide-fade" mode="out-in">
                 <router-view></router-view>
             </transition>
@@ -62,10 +32,6 @@
                 <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbar.close()">Retry</md-button>
             </md-snackbar>
         </div>
-        <!--<v-footer>-->
-
-
-        <!--</v-footer>-->
     </div>
 
 </template>
@@ -92,8 +58,6 @@
         },
         created () {
 
-            console.log(this.$route.name);
-
             if(this.url == 'home'){
 //                console.log(this.url.name);
                 this.home = true
@@ -101,44 +65,18 @@
 //                console.log(this.url);
                 this.home = false
             }
+
         },
         computed: mapGetters({
             notification: 'notification',
+            user: 'user',
         }),
         methods: {
-            toggleLeftSidenav() {
-                this.$refs.leftSidenav.toggle();
-            },
-            toggleRightSidenav() {
-                this.$refs.rightSidenav.toggle();
-            },
-            closeRightSidenav() {
-                this.$refs.rightSidenav.close();
-            },
-            closeLeftSidenav() {
-                this.$refs.leftSidenav.close();
-            },
-            open(ref) {
-                console.log('Opened: ' + ref);
-            },
-            close(ref) {
-                console.log('Closed: ' + ref);
-            },
-            goBack(){
-                console.log('go back');
-                this.$router.go(-1);
-
-//                setTimeout(function () { this.changeUrl() }.bind(this), 100)
-            },
-//            changeUrl: function(){
-//                this.url = this.$route.name;
-//                console.log(this.url);
-//            }
 
         },
         components: {
 
-//            'side-bar': sideBar,
+            'side-bar': sideBar,
         },
         watch: {
 
@@ -147,25 +85,6 @@
                     this.$refs.snackbar.open();
                 }
 
-            },
-            url: function(val) {
-                if(val == 'home'){
-//                    console.log(this.url.name);
-                    this.home = true
-                }else{
-//                    console.log(this.url);
-                    this.home = false
-                }
-            },
-            '$route': function(e){
-
-                if(e.name == 'home'){
-//                    console.log(this.url.name);
-                    this.home = true
-                }else{
-//                    console.log(this.url);
-                    this.home = false
-                }
             }
         }
 
@@ -191,6 +110,9 @@
         opacity: 0;
     }
 
+    .bloc-center {
+        margin: 0 auto;
+    }
 
     .large-button {
         width: 100%;

@@ -7,34 +7,50 @@ import {HTTP} from '../../api.js'
 import * as types from '../mutation-types'
 
 const state = {
-    id: '',
-    username: '',
-    name: '',
-    lastName: '',
-    email: '',
-    connection: '',
-    lastConnection: '',
-    signUp: '',
+
+    user: {
+        id: '',
+        username: '',
+        name: '',
+        lastName: '',
+        email: '',
+        connection: '',
+        lastConnection: '',
+        signUp: '',
+        logged: false,
+    }
 
 };
 
 // getters
 const getters = {
-    user: state => [state => state.id, state => state.username, state => state.name, state => state.lastName, state => state.email, state => state.connection, state => state.lastConnection, state => state.signUp],
-    getId: state => state.id,
-    getUsername: state => state.username,
-    getName: state => state.name,
-    getLastName: state => state.lastName,
-    getEmail: state => state.email,
-    getConnection: state => state.connection,
-    getLastConnection: state => state.lastConnection,
+
+    // getLastConnection: state => state.lastConnection,
+    // getLogged: state => state.logged,
+    user: state => state.user,
 };
 
 // actions
 const actions = {
-    login ({ commit }) {
+    checkLoggedIn ({ commit }) {
 
-        commit(types.INCREMENTE)
+        const user_id = localStorage.getItem('id');
+
+
+        return new Promise((resolve, reject) => {
+
+            if (user_id){
+                commit(types.GET_LOCAL_USER)
+
+                resolve(true)
+
+            }else {
+                reject(false)
+            }
+
+
+        })
+
 
         // HTTP.get('posts/'+this.username)
         //     .then(response => {
@@ -47,34 +63,73 @@ const actions = {
         //     })
 
     },
-    register ({ commit }) {
-        // setTimeout(() => {
-        // commit(types.DECREMENTE)
-        // }, 1000)
+    logIn ({ commit }, values) {
+
+        localStorage.setItem('id', 1)
+
         return new Promise((resolve, reject) => {
-            // setTimeout(() => {
-            commit(types.DECREMENTE)
-            commit(types.SET_NOTIFICATIONS)
-            resolve()
-            // }, 1000)
+
+            const user_id = localStorage.getItem('id');
+
+            if (user_id){
+
+                console.warn(user_id);
+
+                commit(types.LOG_USER)
+
+                resolve(true)
+
+            }else {
+                reject(false)
+            }
+
+
         })
-    }
+
+    },
+    logOut ({ commit }) {
+
+        const user_id = localStorage.getItem('id');
+
+        return new Promise((resolve, reject) => {
+
+            if (user_id){
+
+                console.warn('deco '+user_id)
+
+                localStorage.removeItem('id')
+
+                commit(types.LOGOUT_USER)
+
+                resolve(true)
+
+            }else {
+                reject(false)
+            }
+
+
+        })
+
+    },
 };
 
 // mutations
 const mutations = {
     // increment: state => state.count++,
 
-    [types.INCREMENTE] (state) {
-        state.count++
+    [types.GET_LOCAL_USER] (state) {
+        state.user.logged = true
+        state.user.username = 'etienne'
     },
-    [types.DECREMENTE] (state) {
-        state.count--
+    [types.LOG_USER] (state) {
+
+
+        setTimeout(function () {state.user.logged = true}.bind(this),2000)
     },
-    [types.SET_NOTIFICATIONS] (state) {
-        state.notifications.push('Mis à jour');
-        setTimeout(() => { state.notifications.pop() }, 1500)
+    [types.LOGOUT_USER] (state) {
+        state.user.logged = false
     },
+    //
 
 };
 

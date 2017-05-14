@@ -1,59 +1,62 @@
 <template>
     <div>
-
-        <!--<div class="phone-viewport">-->
-
         <md-toolbar>
-            <md-button class="md-icon-button" @click.native="toggleLeftSidenav">
+            <md-button class="md-icon-button" @click.native="toggleLeftSidenav" v-if="user.logged">
                 <md-icon>menu</md-icon>
             </md-button>
-
-            <h2 class="md-title">Night Spot</h2>
+            <div v-bind:class="[!user.logged ? isLoggedIn : '', errorClass]">
+                <h2 class="md-title"><router-link :to="{ name: 'home'}" >Night Spot</router-link></h2>
+            </div>
         </md-toolbar>
-        <!--<nav class=" teal  lighten-2">-->
-            <!--<div class="nav-wrapper lighten-2" >-->
-                <!--&lt;!&ndash;<a href="#" class="brand-logo center">Logo</a>&ndash;&gt;-->
-                <!--<a href="#" data-activates="slide-out" class="brand-logo"><i class="material-icons">menu</i></a>-->
+        <md-toolbar class="md-dense" v-if="!home">
+            <md-button class="md-icon-button" @click.native="goBack">
+                <md-icon >undo</md-icon>
+            </md-button>
 
-                <!--<router-link :to="{ name: 'home'}" data-activates="slide-out" class="brand-logo center">Logo</router-link>-->
+            <!--<h2 class="md-title" style="flex: 1">Dense</h2>-->
 
+            <!--<md-button class="md-icon-button">-->
+            <!--<md-icon>favorite</md-icon>-->
+            <!--</md-button>-->
+        </md-toolbar>
 
-                <!--<ul id="nav-mobile" class="right hide-on-med-and-down">-->
-                    <!--<li><router-link :to="{ name: 'home'}" class="test">Go to home</router-link></li>-->
-                    <!--<li><router-link :to="{ name: 'test'}">test</router-link></li>-->
-                    <!--<li><router-link :to="{ name: 'panier'}">Go to panier</router-link></li>-->
-                <!--</ul>-->
-            <!--</div>-->
-        <!--</nav>-->
-
-            <md-sidenav class="md-left" ref="leftSidenav" @open="open('Left')" @close="close('Left')">
-                <md-toolbar class="md-large">
-                    <div class="md-toolbar-container">
-                        <h3 class="md-title">My profil</h3>
-                    </div>
-                </md-toolbar>
-                <div class="nav-bar-link">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi cupiditate esse necessitatibus beatae nobis, deserunt ut est fugit, tempora deleniti, eligendi commodi doloribus. Nemo, assumenda possimus, impedit inventore perferendis iusto!</p>
-                    <li><router-link :to="{ name: 'home'}" class="test">Go to home</router-link></li>
-                    <li><router-link :to="{ name: 'test'}">test</router-link></li>
-                    <li><router-link :to="{ name: 'panier'}">Go to panier</router-link></li>
+        <md-sidenav class="md-left" ref="leftSidenav" @open="open('Left')" @close="close('Left')">
+            <md-toolbar class="md-large">
+                <div class="md-toolbar-container">
+                    <h3 class="md-title">My profil</h3>
+                    <h3 class="md-title" v-if="!user.logged">Non connecté</h3>
                 </div>
-            </md-sidenav>
+            </md-toolbar>
 
+            <div class="nav-bar-link" >
+                <md-list>
+                        <md-list-item >
+                            <md-icon>move_to_inbox</md-icon> <span>Inbox</span>
+                        </md-list-item>
 
-        <!--</div>-->
+                        <md-list-item>
+                            <md-icon>send</md-icon> <span><router-link :to="{ name: 'panier'}" ref="leftSidenav" @click.native="toggleLeftSidenav" >Go to panier</router-link></span>
+                        </md-list-item>
 
-        <!--<md-bottom-bar>-->
-            <!--<md-bottom-bar-item md-icon="history"><router-link :to="{ name: 'home'}" class="test">Go to home</router-link></md-bottom-bar-item>-->
-            <!--<md-bottom-bar-item md-icon="favorite" md-active><router-link :to="{ name: 'test'}">test</router-link></md-bottom-bar-item>-->
-            <!--<md-bottom-bar-item md-icon="near_me"><router-link :to="{ name: 'panier'}">Go to panier</router-link></md-bottom-bar-item>-->
-        <!--</md-bottom-bar>-->
+                        <md-list-item>
+                            <md-icon>delete</md-icon> <span><router-link :to="{ name: 'test'}" ref="leftSidenav" @click.native="toggleLeftSidenav" >test</router-link></span>
+                        </md-list-item>
 
+                        <md-list-item>
+                            <md-icon>error</md-icon> <span><router-link :to="{ name: 'home'}" ref="leftSidenav" @click.native="toggleLeftSidenav">Go to home</router-link></span>
 
-        <!--<router-link to="/home'">Go to home</router-link>-->
+                            <md-divider class="md-inset"></md-divider>
+                        </md-list-item>
 
+                        <md-list-item>
+                            <md-icon>error</md-icon> <span><router-link :to="{ name: 'logout'}" ref="leftSidenav" @click.native="toggleLeftSidenav">Logout</router-link></span>
+
+                            <!--<md-divider class="md-inset"></md-divider>-->
+                        </md-list-item>
+                </md-list>
+            </div>
+        </md-sidenav>
     </div>
-
 </template>
 
 <script>
@@ -64,24 +67,26 @@
     export default {
         name: 'sideBar',
         store,
-        ready: function(){
-//
-            // Show sideNav
-//            $('.button-collapse').sideNav('show');
-            // Initialize collapse button
-            $(".button-collapse").sideNav();
-            // Initialize collapsible (uncomment the line below if you use the dropdown variation)
-            $('.collapsible').collapsible();
+        data () {
+            return {
+                home: false,
+                url: this.$route.name,
 
-//            $(".button-collapse").sideNav();
-
-
-            $(".button-collapse").click(function(){
-                alert('zz');
-                $("#slide-out").css("transform", "translateX(0%)");
-
-            }) ;
+                isLoggedIn : 'bloc-center',
+                errorClass : '',
+            }
         },
+        created () {
+
+            if(this.url == 'home'){
+                this.home = true
+            }else{
+                this.home = false
+            }
+        },
+        computed: mapGetters({
+            user: 'user',
+        }),
         methods: {
             toggleLeftSidenav() {
                 this.$refs.leftSidenav.toggle();
@@ -92,11 +97,42 @@
             closeRightSidenav() {
                 this.$refs.rightSidenav.close();
             },
+            closeLeftSidenav() {
+                this.$refs.leftSidenav.close();
+            },
             open(ref) {
                 console.log('Opened: ' + ref);
             },
             close(ref) {
                 console.log('Closed: ' + ref);
+            },
+            goBack(){
+                console.log('go back side');
+                this.$router.go(-1);
+
+//                setTimeout(function () { this.changeUrl() }.bind(this), 100)
+            },
+
+        },
+        watch: {
+            '$route': function(e){
+
+                if(e.name == 'home'){
+//                    console.log(this.url.name);
+                    this.home = true
+                }else{
+//                    console.log(this.url);
+                    this.home = false
+                }
+            },
+            user: function (val) {
+
+                console.warn(val)
+                if (val == true){
+                    this.user.logged = false
+                }else {
+                    this.user.logged = true
+                }
             }
         }
 

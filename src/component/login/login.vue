@@ -1,19 +1,20 @@
 <template>
     <div class="row">
 
-        <md-layout >
-            <router-link :to="'-1'">Return</router-link>
-        </md-layout>
+        <!--<md-layout >-->
+            <!--<router-link :to="'-1'">Return</router-link>-->
+        <!--</md-layout>-->
 
         <div class="center">
             <h2>Connexion</h2>
         </div>
+        <router-view></router-view>
         <form class="col s6 offset-s3" v-on:submit.prevent  @submit.stop.prevent="submit">
         <!--<div class="col s6 offset-s3">-->
 
             <md-input-container>
                 <label>Email or username</label>
-                <md-input v-model="username"></md-input>
+                <md-input type="email" v-model="username"></md-input>
             </md-input-container>
 
             <md-input-container md-has-password>
@@ -44,13 +45,13 @@
             <!--</md-snackbar>-->
             <div>
 
-                <md-spinner md-indeterminate></md-spinner>
+                <!--<md-spinner md-indeterminate></md-spinner>-->
                 <!--<i  class="fa fa-spinner fa-spin"></i>-->
                 <md-spinner  v-show="loading" :md-size="60" md-indeterminate class="md-warn"></md-spinner>
-                <span v-if="posts" v-for="user, index in posts">
-                    {{index}}.{{user}} / {{user.id}} -> {{user.title}}
-                    <br>
-                </span>
+                <!--<span v-if="posts" v-for="user, index in posts">-->
+                    <!--{{index}}.{{user}} / {{user.id}} -> {{user.title}}-->
+                    <!--<br>-->
+                <!--</span>-->
 
             </div>
         <!--</div>-->
@@ -76,42 +77,64 @@
             }
 
         },
+        computed: mapGetters({
+            user:'user'
+        }),
         created () {
 
             this.loading = true;
 
-            HTTP.get('posts/1')
-                .then(response => {
-                    this.posts = response.data;
-                    this.loading = false;
-//                    alert(this.posts)
+            setTimeout(function () {this.loading = false}.bind(this),500)
 
-                })
-                .catch(e => {
-                    this.errors.push(e)
-                })
+//            setTimeout(function () { this.changeUrl() }.bind(this), 100)
+//            HTTP.get('posts/1').then(response => {
+//                    this.posts = response.data;
+//                    this.loading = false;
+////                    alert(this.posts)
+//
+//                })
+//                .catch(e => {
+//                    this.errors.push(e)
+//                })
         },
         methods: {
             submit: function () {
 
                 this.loading = true;
-                this.posts = null;
 
-                HTTP.get('posts/'+this.username)
-                    .then(response => {
-                        this.posts = response.data;
-                        this.loading = false;
-//                        alert(this.posts)
-//                        this.$refs.snackbar.open();
+
+                if (this.username && this.password){
+
+                    store.dispatch('logIn', {'username':this.username, 'password':this.password}).then(response => {
+                        console.warn('Logged')
+//                        this.user.logged=true
+
+                        setTimeout(function () {this.$router.push({ name: 'home'})}.bind(this),2000)
+                    }, error => {
+                        console.error("Not logged")
                     })
-                    .catch(e => {
-                        this.loading = false;
+                }
+//                this.posts = null;
 
-                        store.dispatch('addNotification', 'Un  problème est survenue').then(() => {})
-                    })
+//                HTTP.get('posts/'+this.username).then(response => {
+//                        this.posts = response.data;
+//                        this.loading = false;
+////                        alert(this.posts)
+////                        this.$refs.snackbar.open();
+//                    })
+//                    .catch(e => {
+//                        this.loading = false;
+//
+//                        store.dispatch('addNotification', 'Un  problème est survenue').then(() => {})
+//                    })
 
 
 
+            }
+        },
+        Watch: {
+            user: function (e) {
+               console.log(e)
             }
         }
 

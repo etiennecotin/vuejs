@@ -3,28 +3,22 @@
         <div class="center">
             <h2>Inscription</h2>
         </div>
-        <form class="col s6 offset-s3">
+        <form class="col s6 offset-s3" v-on:submit.prevent  @submit.stop.prevent="submit">
+            <!--<div class="col s6 offset-s3">-->
 
+            <md-input-container>
+                <label>Email or username</label>
+                <md-input v-model="username"></md-input>
+            </md-input-container>
 
-            <div class="row">
-                <div class="input-field col s12">
-                    <input id="email" type="email" class="validate">
-                    <label for="email">Email</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <input id="password" type="password" class="validate">
-                    <label for="password">Password</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                        <i class="material-icons right">Inscription</i>
-                    </button>
-                </div>
-            </div>
+            <md-input-container md-has-password>
+                <label>Password</label>
+                <md-input type="password" v-model="password"></md-input>
+            </md-input-container>
+
+            <md-layout md-align="center">
+                <md-button class="md-raised md-primary large-button" type="submit" v-on:click="submit" >Inscription</md-button>
+            </md-layout>
 
         </form>
     </div>
