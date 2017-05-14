@@ -1,6 +1,10 @@
-# night Spot
+# Night Spot
 
 > A Vue.js project
+
+
+
+> Application pour trouver des spots de soirée autour de soi
 
 ## Build Setup
 
