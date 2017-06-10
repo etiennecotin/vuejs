@@ -1,10 +1,10 @@
-# Night Spot
+# Share Music
 
 > A Vue.js project
 
 
 
-> Application pour trouver des spots de soirée autour de soi
+> Plate forme de partage de musique
 
 ## Build Setup
 
